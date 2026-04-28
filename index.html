@@ -1,93 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<title>Loading...</title>
 
-    <title>Screenshot by Lightshot</title>
-
-    <!-- Quité el PHP -->
-    <meta property="og:title" content="Screenshot">
-    <meta property="og:url" content="https://yorch-qw.github.io/xd/">
-    <meta property="og:site_name" content="Lightshot">
-    <meta property="og:image" content="https://pnrtscr.com/lightshot.png">
-    <meta property="og:description" content="Captured with Lightshot">
-
-    <style>
-        body { margin:0; }
-
-        .overlay, .scare {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100vh;
-            width: 100vw;
-        }
-
-        .overlay {
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f5f6fa;
-            font-family: Arial;
-            text-align: center;
-        }
-
-        .overlay[hidden] {
-            display: none;
-        }
-
-        .overlay-button {
-            padding: 10px 20px;
-            margin: 10px;
-            cursor: pointer;
-            background: purple;
-            color: white;
-        }
-
-        .scare {
-            z-index: 1;
-        }
-
-        video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-    </style>
+<style>
+body { margin:0; }
+#overlay {
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Arial;
+    cursor:pointer;
+}
+video {
+    position:fixed;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+</style>
 </head>
 
 <body>
 
-<div id="overlay" class="overlay">
-    <div>
-        <h2>Cookies and user-generated content</h2>
-        <p>Accept cookies to continue</p>
-        <div>
-            <div id="accept" class="overlay-button">Accept</div>
-            <div id="decline" class="overlay-button">Decline</div>
-        </div>
-    </div>
-</div>
+<div id="overlay">Click to view image</div>
 
-<div class="scare">
-    <!-- 🔥 ARREGLADO AQUÍ -->
-    <video id="video" src="video.mp4"></video>
-</div>
+<video id="video" preload="auto">
+    <source src="video.mp4" type="video/mp4">
+</video>
 
 <script>
-const video = document.getElementById("video");
 const overlay = document.getElementById("overlay");
+const video = document.getElementById("video");
 
-function start() {
-    overlay.hidden = true;
-    video.play();
-    document.documentElement.requestFullscreen();
-}
-
-document.getElementById("accept").onclick = start;
-document.getElementById("decline").onclick = start;
+overlay.onclick = () => {
+    overlay.style.display = "none";
+    video.muted = false;
+    video.play().then(()=>{
+        document.documentElement.requestFullscreen();
+    }).catch(e=>{
+        alert("Error reproduciendo video");
+        console.log(e);
+    });
+};
 </script>
 
 </body>
